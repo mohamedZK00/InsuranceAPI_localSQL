@@ -8,6 +8,9 @@ import psycopg2
 import joblib
 from dotenv import load_dotenv
 
+# Load environment variables
+load_dotenv()
+
 app = FastAPI()
 
 # تحميل النموذج
