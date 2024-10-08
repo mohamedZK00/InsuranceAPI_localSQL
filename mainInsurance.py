@@ -10,8 +10,12 @@ app = FastAPI()
 
 # load model
 #model = load_model('insurance_Model')
-model_path = os.path.dirname(os.path.realpath(__file__), '1-Insurance_model')
+
+model_dir = os.path.dirname(os.path.realpath(__file__))  # المسار إلى الدليل الحالي
+model_path = os.path.join(model_dir, '1-Insurance_model')# إضافة اسم النموذج
+
 model = load_model(model_path)
+
 
 class InsurancePRED(BaseModel):
     age: int
