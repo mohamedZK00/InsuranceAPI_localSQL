@@ -1,5 +1,0 @@
-host='localhost'
-database='insurance_prediction'
-user='postgres'
-password='admin'
-port='5432'
