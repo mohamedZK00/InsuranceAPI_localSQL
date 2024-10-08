@@ -53,7 +53,7 @@ class InsurancePRED(BaseModel):
 # Function to get database connection using environment variables
 def get_connection():
     try: 
-        database_url = os.environ.get("DATABASE_URL")
+        database_url = os.getenv("DATABASE_URL")
         if not database_url:
             raise ValueError("DATABASE_URL is not set in the environment.")
         
