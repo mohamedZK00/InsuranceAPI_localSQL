@@ -5,17 +5,29 @@ from pycaret.regression import load_model, predict_model
 import pandas as pd
 from fastapi.middleware.cors import CORSMiddleware
 import psycopg2
+import joblib  # إضافة استيراد joblib
 
 app = FastAPI()
 
-# load model
-#model = load_model('insurance_Model')
-
+# تحميل النموذج
 model_dir = os.path.dirname(os.path.realpath(__file__))  # المسار إلى الدليل الحالي
-model_path = os.path.join(model_dir, '1-Insurance_model')# إضافة اسم النموذج
+model_path = os.path.join(model_dir, '1-Insurance_model')  # إضافة اسم النموذج
 
-model = load_model(model_path)
+# طباعة المسار للتحقق
+print(f"Loading model from: {model_path}")
 
+try:
+    # استخدام load_model من pycaret
+    model = load_model(model_path)
+except Exception as e:
+    print(f"Failed to load model with pycaret: {e}")
+    try:
+        # محاولة استخدام joblib مباشرة لتحميل النموذج
+        model = joblib.load(model_path)
+        print("Model loaded successfully with joblib.")
+    except Exception as e:
+        print(f"Failed to load model with joblib: {e}")
+        raise e  # رفع الاستثناء إذا لم يتم التحميل
 
 class InsurancePRED(BaseModel):
     age: int
@@ -25,18 +37,16 @@ class InsurancePRED(BaseModel):
     smoker: str
     region: str
 
-
 # Function to get database connection using environment variables
 def get_connection():
     conn = psycopg2.connect(
-        host=os.os.environ.get('host'),
-        database=os.os.environ.get('database'),
-        user=os.os.environ.get('user'),
-        password=os.os.environ.get('password'),
-        port=os.os.environ.get('port')
+        host=os.environ.get('host'),
+        database=os.environ.get('database'),
+        user=os.environ.get('user'),
+        password=os.environ.get('password'),
+        port=os.environ.get('port')
     )
     return conn
-
 
 def db_created():
     try:
@@ -67,7 +77,6 @@ def db_created():
 # Create table when the app starts
 db_created()
 
-
 @app.post('/predict')
 def FUNprediction(input_data: InsurancePRED):
     try:
@@ -94,7 +103,6 @@ def FUNprediction(input_data: InsurancePRED):
     except psycopg2.Error as e:
         print(f"Prediction error: {e}")
         return {"error": "Failed to add predictions to table"}
-
 
 
 
