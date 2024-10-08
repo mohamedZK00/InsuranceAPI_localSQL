@@ -11,7 +11,7 @@ app = FastAPI()
 # load model
 #model = load_model('insurance_Model')
 working_dir = os.path.dirname(os.path.realpath(__file__))
-model_path = os.path.join(working_dir, 'insurance_Model.pkl')
+model_path = os.path.join(working_dir, 'insurance_Model')
 
 model = load_model(model_path)
 
