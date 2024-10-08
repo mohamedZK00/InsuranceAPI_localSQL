@@ -5,7 +5,8 @@ from pycaret.regression import load_model, predict_model
 import pandas as pd
 from fastapi.middleware.cors import CORSMiddleware
 import psycopg2
-import joblib  # إضافة استيراد joblib
+import joblib
+from dotenv import load_dotenv
 
 app = FastAPI()
 
@@ -52,7 +53,6 @@ def get_connection():
         database_url = os.environ.get("DATABASE_URL")
         if not database_url:
             raise ValueError("DATABASE_URL is not set in the environment.")
-        
         conn = psycopg2.connect(database_url)
         return conn
         
