@@ -56,11 +56,16 @@ def get_connection():
         database_url = os.environ.get("DATABASE_URL")
         if not database_url:
             raise ValueError("DATABASE_URL is not set in the environment.")
+        
+        print(f"Connecting to the database using {database_url}")  # طباعة DATABASE_URL للتحقق
+        
         conn = psycopg2.connect(database_url)
         return conn
         
     except psycopg2.Error as e:
         print(f"Database connection error: {e}")
+        return None
+
    
 def db_created():
     try:
