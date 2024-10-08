@@ -13,8 +13,7 @@ app = FastAPI()
 working_dir = os.path.dirname(os.path.realpath(__file__))
 model_path = os.path.join(working_dir, 'insurance_Model.pkl')
 
-with open(model_path, 'rb') as f:
-    model = pickle.load(f)
+model = load_model(model_path)
 
 class InsurancePRED(BaseModel):
     age: int
