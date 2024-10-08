@@ -4,6 +4,7 @@ uvicorn==0.21.1
 pydantic==1.10.8
 pandas==1.4.3
 pycaret==3.0.0
+joblib==1.1.0
 psycopg2-binary==2.9.6
 scikit-learn==1.1.2
 numpy==1.23.5  
