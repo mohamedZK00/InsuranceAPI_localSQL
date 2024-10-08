@@ -28,11 +28,11 @@ class InsurancePRED(BaseModel):
 # Function to get database connection using environment variables
 def get_connection():
     conn = psycopg2.connect(
-        host=os.os.environ.get('DB_HOST', 'localhost'),
-        database=os.os.environ.get('DB_NAME', 'insurance_prediction'),
-        user=os.os.environ.get('DB_USER', 'postgres'),
-        password=os.os.environ.get('DB_PASSWORD', 'admin'),
-        port=os.os.environ.get('DB_PORT', '5432')
+        host=os.os.environ.get('host'),
+        database=os.os.environ.get('database'),
+        user=os.os.environ.get('user'),
+        password=os.os.environ.get('password'),
+        port=os.os.environ.get('port')
     )
     return conn
 
