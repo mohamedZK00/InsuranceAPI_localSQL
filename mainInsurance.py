@@ -39,15 +39,17 @@ class InsurancePRED(BaseModel):
 
 # Function to get database connection using environment variables
 def get_connection():
-    conn = psycopg2.connect(
-        host=os.environ.get('host'),
-        database=os.environ.get('database'),
-        user=os.environ.get('user'),
-        password=os.environ.get('password'),
-        port=os.environ.get('port')
-    )
-    return conn
-
+    try: 
+        database_url = os.environ.get("DATABASE_URL")
+        if not database_url:
+            raise ValueError("DATABASE_URL is not set in the environment.")
+        
+        conn = psycopg2.connect(database_url)
+        return conn
+        
+    except psycopg2.Error as e:
+        print(f"Database connection error: {e}")
+   
 def db_created():
     try:
         conn = get_connection()
